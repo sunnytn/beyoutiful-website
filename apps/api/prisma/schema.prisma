@@ -1,0 +1,468 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────── Users & Auth ───────────────────────────
+
+enum UserRole {
+  ADMIN
+  STAFF
+  CUSTOMER
+}
+
+model User {
+  id           String         @id @default(cuid())
+  email        String         @unique
+  passwordHash String
+  fullName     String
+  phone        String?
+  role         UserRole       @default(CUSTOMER)
+  isActive     Boolean        @default(true)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  refreshTokens RefreshToken[]
+  orders       Order[]
+  reviews      Review[]
+  auditLogs    AuditLog[]
+
+  @@index([role])
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+// ─────────────────────────── Catalog ───────────────────────────
+
+model Category {
+  id          String            @id @default(cuid())
+  name        String
+  slug        String            @unique
+  description String?
+  imageUrl    String?
+  sortOrder   Int               @default(0)
+  isActive    Boolean           @default(true)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  products    ProductCategory[]
+}
+
+model Collection {
+  id          String              @id @default(cuid())
+  name        String
+  slug        String              @unique
+  description String?
+  imageUrl    String?
+  sortOrder   Int                 @default(0)
+  isActive    Boolean             @default(true)
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  products    ProductCollection[]
+}
+
+model Product {
+  id               String              @id @default(cuid())
+  name             String
+  slug             String              @unique
+  shortDescription String?
+  description      String
+  benefits         String[]            @default([])
+  directions       String?
+  price            Int // whole PKR
+  compareAtPrice   Int?
+  stock            Int                 @default(100)
+  isActive         Boolean             @default(true)
+  isFeatured       Boolean             @default(false)
+  isBestSeller     Boolean             @default(false)
+  isNewArrival     Boolean             @default(false)
+  videoUrl         String?
+  concerns         String[]            @default([]) // advisor concern slugs
+  tags             String[]            @default([])
+  avgRating        Float               @default(0)
+  reviewCount      Int                 @default(0)
+  soldCount        Int                 @default(0)
+  metaTitle        String?
+  metaDescription  String?
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  images           ProductImage[]
+  variants         ProductVariant[]
+  categories       ProductCategory[]
+  collections      ProductCollection[]
+  ingredients      ProductIngredient[]
+  faqs             ProductFaq[]
+  reviews          Review[]
+  orderItems       OrderItem[]
+  relatedFrom      RelatedProduct[]    @relation("relatedFrom")
+  relatedTo        RelatedProduct[]    @relation("relatedTo")
+
+  @@index([isActive, isFeatured])
+  @@index([isActive, isBestSeller])
+  @@index([isActive, isNewArrival])
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  alt       String?
+  sortOrder Int     @default(0)
+  publicId  String? // Cloudinary public id
+
+  @@index([productId])
+}
+
+model ProductVariant {
+  id        String      @id @default(cuid())
+  productId String
+  product   Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name      String // e.g. "100ml", "250g"
+  price     Int
+  stock     Int         @default(100)
+  sortOrder Int         @default(0)
+  isActive  Boolean     @default(true)
+  orderItems OrderItem[]
+
+  @@index([productId])
+}
+
+model ProductCategory {
+  productId  String
+  categoryId String
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([productId, categoryId])
+}
+
+model ProductCollection {
+  productId    String
+  collectionId String
+  product      Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+
+  @@id([productId, collectionId])
+}
+
+model RelatedProduct {
+  productId String
+  relatedId String
+  product   Product @relation("relatedFrom", fields: [productId], references: [id], onDelete: Cascade)
+  related   Product @relation("relatedTo", fields: [relatedId], references: [id], onDelete: Cascade)
+
+  @@id([productId, relatedId])
+}
+
+model Ingredient {
+  id          String              @id @default(cuid())
+  name        String
+  slug        String              @unique
+  description String
+  benefits    String[]            @default([])
+  imageUrl    String?
+  isActive    Boolean             @default(true)
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  products    ProductIngredient[]
+}
+
+model ProductIngredient {
+  productId    String
+  ingredientId String
+  product      Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+
+  @@id([productId, ingredientId])
+}
+
+model ProductFaq {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  question  String
+  answer    String
+  sortOrder Int     @default(0)
+
+  @@index([productId])
+}
+
+// ─────────────────────────── Reviews ───────────────────────────
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Review {
+  id        String       @id @default(cuid())
+  productId String
+  product   Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId    String?
+  user      User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  name      String
+  email     String?
+  rating    Int
+  title     String?
+  body      String
+  status    ReviewStatus @default(PENDING)
+  createdAt DateTime     @default(now())
+
+  @@index([productId, status])
+}
+
+// ─────────────────────────── Orders ───────────────────────────
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PACKED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  orderNumber   String      @unique
+  userId        String?
+  user          User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
+  status        OrderStatus @default(PENDING)
+  customerName  String
+  customerEmail String
+  customerPhone String
+  address       String
+  city          String
+  postalCode    String?
+  notes         String?
+  subtotal      Int
+  shippingFee   Int
+  discount      Int         @default(0)
+  total         Int
+  whatsappSent  Boolean     @default(false)
+  emailsSent    Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  items         OrderItem[]
+
+  @@index([status, createdAt])
+  @@index([customerEmail])
+}
+
+model OrderItem {
+  id          String          @id @default(cuid())
+  orderId     String
+  order       Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId   String?
+  product     Product?        @relation(fields: [productId], references: [id], onDelete: SetNull)
+  variantId   String?
+  variant     ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+  productName String
+  variantName String?
+  unitPrice   Int
+  quantity    Int
+  lineTotal   Int
+
+  @@index([orderId])
+}
+
+// ─────────────────────────── Content ───────────────────────────
+
+model BlogCategory {
+  id    String     @id @default(cuid())
+  name  String
+  slug  String     @unique
+  posts BlogPost[]
+}
+
+model BlogPost {
+  id              String        @id @default(cuid())
+  title           String
+  slug            String        @unique
+  excerpt         String
+  content         String // markdown
+  coverImageUrl   String?
+  categoryId      String?
+  category        BlogCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  tags            String[]      @default([])
+  author          String        @default("BeYoutiful Organics")
+  isPublished     Boolean       @default(true)
+  publishedAt     DateTime      @default(now())
+  metaTitle       String?
+  metaDescription String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([isPublished, publishedAt])
+}
+
+model Faq {
+  id        String  @id @default(cuid())
+  question  String
+  answer    String
+  category  String  @default("General") // General | Orders | Shipping | Products | Hair | Skin
+  tags      String[] @default([])
+  sortOrder Int     @default(0)
+  isActive  Boolean @default(true)
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  name      String
+  location  String?
+  avatarUrl String?
+  rating    Int      @default(5)
+  text      String
+  productSlug String?
+  isActive  Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model BeforeAfter {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  beforeUrl   String
+  afterUrl    String
+  durationLabel String? // e.g. "8 weeks"
+  concern     String? // concern slug
+  productSlug String?
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+}
+
+// ─────────────────────────── Advisor ───────────────────────────
+
+enum AdvisorGoal {
+  HAIR
+  SKIN
+}
+
+model AdvisorConcern {
+  id        String      @id @default(cuid())
+  goal      AdvisorGoal
+  name      String
+  slug      String      @unique
+  iconKey   String?
+  sortOrder Int         @default(0)
+  isActive  Boolean     @default(true)
+}
+
+model AdvisorQuestion {
+  id        String          @id @default(cuid())
+  key       String          @unique // e.g. "hairType"
+  label     String
+  goal      AdvisorGoal? // null = both
+  sortOrder Int             @default(0)
+  isActive  Boolean         @default(true)
+  options   AdvisorOption[]
+}
+
+model AdvisorOption {
+  id         String          @id @default(cuid())
+  questionId String
+  question   AdvisorQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  value      String
+  label      String
+  sortOrder  Int             @default(0)
+}
+
+model AdvisorRule {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  priority    Int      @default(0)
+  conditions  Json // AdvisorRuleConditions
+  productSlugs Json // Array<{slug, weight, reason?}>
+  routine     Json? // RoutineStep[]
+  blogSlugs   String[] @default([])
+  faqIds      String[] @default([])
+  beforeAfterIds String[] @default([])
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ─────────────────────────── Marketing / Site ───────────────────────────
+
+model NewsletterSubscriber {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  isActive     Boolean   @default(true)
+  subscribedAt DateTime  @default(now())
+  unsubscribedAt DateTime?
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model HomepageSection {
+  id        String  @id @default(cuid())
+  key       String  @unique // hero | categories | featured | ingredients | story | testimonials | blog | newsletter
+  title     String?
+  subtitle  String?
+  content   Json? // section-specific payload (hero slides, etc.)
+  isActive  Boolean @default(true)
+  sortOrder Int     @default(0)
+}
+
+model Setting {
+  key   String @id
+  value Json
+  group String @default("general") // general | shipping | contact | social | seo | advisor
+}
+
+model SeoEntry {
+  id              String  @id @default(cuid())
+  path            String  @unique // e.g. "/about"
+  metaTitle       String?
+  metaDescription String?
+  ogImageUrl      String?
+  canonicalUrl    String?
+  noIndex         Boolean @default(false)
+}
+
+model SearchSynonym {
+  id       String   @id @default(cuid())
+  term     String   @unique // user query term
+  mapsTo   String[] // canonical terms/slugs
+  isActive Boolean  @default(true)
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action    String // CREATE | UPDATE | DELETE | LOGIN | STATUS_CHANGE
+  entity    String
+  entityId  String?
+  detail    Json?
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([entity, createdAt])
+}

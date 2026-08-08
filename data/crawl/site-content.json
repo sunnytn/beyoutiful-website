@@ -1,0 +1,67 @@
+{
+  "crawledAt": "2026-07-06",
+  "source": "https://beyoutifulorganics.com",
+  "business": {
+    "name": "BeYoutiful Organics",
+    "legalName": "Beyoutiful Organics",
+    "location": "Karachi, Pakistan",
+    "whatsapp": "03000527443",
+    "whatsappIntl": "923000527443",
+    "email": "beyoutiful.organics@gmail.com",
+    "facebook": "https://m.facebook.com/beyoutifulorganics1",
+    "instagram": "https://instagram.com/beyoutifulorganics",
+    "whatsappCatalog": "https://wa.me/c/923000527443",
+    "currency": "PKR",
+    "currencySymbol": "₨",
+    "founded": "2023",
+    "logo": "https://beyoutifulorganics.com/wp-content/uploads/2023/12/IMG_0360-scaled-removebg-preview.png"
+  },
+  "aboutStory": "Welcome to BeYoutiful Organics, your one-stop shop for all things organic! We believe that the journey towards wellness and beauty should be an organic one, free from harmful toxins and harsh chemicals. Our founder has always been passionate about using organic products and after struggling to find reliable sources for her own needs, she decided to create BeYoutiful Organics. Our carefully curated selection of skincare, haircare, bodycare and other organic products come straight from Mother Nature herself. We work closely with small businesses and local artisans to bring you the highest quality ingredients, each with its own unique benefit for your skin and hair. From our formulas to packaging, playful shades to seriously-great organic skincare—BeYoutiful was built to make beauty accessible and uncomplicated. At BeYoutiful Organics, we not only care about providing you with pure and organic products but also educating our customers on why going organic is important for our health and environment so that you can make informed choices about your skincare and haircare routine. We aim to build a community through website and social media, devoted to sharing real information with real people, about really amazing organic products. It's where we realized that beauty shouldn't be built in a boardroom—it should be built by YOU and about YOU. Now that you're here, take a look around. Mingle with our products, and enjoy. Because no matter where you are in your beauty journey—you look BeYoutiful. Join us on this journey towards embracing your true beauty in the most natural way possible. Let's be \"BEYOUTIFUL\" together!",
+  "categories": [
+    { "name": "Haircare Products", "slug": "haircare-products", "count": 9, "image": "https://beyoutifulorganics.com/wp-content/uploads/2024/01/Organic-Haircare-Range-1099x800.png" },
+    { "name": "SkinCare Products", "slug": "skincare-products", "count": 13, "image": "https://beyoutifulorganics.com/wp-content/uploads/2024/01/Organic-skincare-range-2-1099x800.png" },
+    { "name": "Others Organics Products", "slug": "others-organics-products", "count": 5, "image": "https://beyoutifulorganics.com/wp-content/uploads/2024/01/Other-Organic-Products-1099x800.png" }
+  ],
+  "products": [
+    { "name": "Almond Oil", "priceMin": 599, "priceMax": 599, "categories": ["haircare-products", "skincare-products"], "type": "variable", "image": "https://beyoutifulorganics.com/wp-content/uploads/2021/08/WhatsApp-Image-2023-12-25-at-22.11.23_1357ebee-2-508x800.jpg" },
+    { "name": "Aloevera Gel", "priceMin": 399, "priceMax": 399, "categories": ["skincare-products"], "rating": 4.0, "image": "https://beyoutifulorganics.com/wp-content/uploads/2021/08/WhatsApp-Image-2023-12-25-at-22.11.20_682ac5c6-430x305.jpg" },
+    { "name": "Amla Reetha Sikakai", "priceMin": 429, "priceMax": 429, "categories": ["others-organics-products"], "type": "variable", "image": "https://beyoutifulorganics.com/wp-content/uploads/2021/08/WhatsApp-Image-2023-12-25-at-22.11.19_55ec7c26-430x320.jpg" },
+    { "name": "Caster Oil", "priceMin": 350, "priceMax": 350, "categories": ["haircare-products", "skincare-products"], "image": "https://beyoutifulorganics.com/wp-content/uploads/2023/12/WhatsApp-Image-2023-12-28-at-14.25.53_64a324a9-430x645.jpg" },
+    { "name": "Chia Seeds", "priceMin": 560, "priceMax": 560, "categories": ["others-organics-products"], "image": "https://beyoutifulorganics.com/wp-content/uploads/2023/12/WhatsApp-Image-2023-12-28-at-14.25.51_ae9b9a1c-430x373.jpg" },
+    { "name": "Coconut Oil", "priceMin": 399, "priceMax": 399, "categories": ["haircare-products"], "image": "https://beyoutifulorganics.com/wp-content/uploads/2023/12/WhatsApp-Image-2023-12-28-at-14.26.03_fa3c2ff9.jpg" },
+    { "name": "Egg Yolk Oil", "priceMin": 199, "priceMax": 199, "categories": ["haircare-products"], "image": "https://beyoutifulorganics.com/wp-content/uploads/2021/08/WhatsApp-Image-2023-12-25-at-22.11.19_972d0dde-1-430x400.jpg" },
+    { "name": "Herbal Shampoo", "priceMin": 99, "priceMax": 99, "categories": ["haircare-products"], "type": "variable", "badge": "New" },
+    { "name": "Kalonji Glycerine Soap", "priceMin": 280, "priceMax": 280, "categories": ["skincare-products"], "image": "https://beyoutifulorganics.com/wp-content/uploads/2024/03/IMG_20221213_151229-430x274.jpg" },
+    { "name": "Khalis Desi Ghee", "priceMin": 2300, "priceMax": 2300, "categories": ["others-organics-products"], "image": "https://beyoutifulorganics.com/wp-content/uploads/2023/12/WhatsApp-Image-2023-12-27-at-00.08.51_0f310654-430x369.jpg" },
+    { "name": "Lemon Essential Oil", "priceMin": 450, "priceMax": 450, "categories": ["skincare-products"], "image": "https://beyoutifulorganics.com/wp-content/uploads/2023/12/WhatsApp-Image-2023-12-28-at-14.26.01_2773dc87-430x287.jpg" },
+    { "name": "Miracle Moisturizer", "priceMin": 199, "priceMax": 399, "categories": ["skincare-products"], "type": "variable", "image": "https://beyoutifulorganics.com/wp-content/uploads/2021/08/WhatsApp-Image-2023-12-25-at-22.11.24_e4a0d1fa-1-508x800.jpg" },
+    { "name": "Mustard Oil", "priceMin": 450, "priceMax": 450, "categories": ["haircare-products", "skincare-products"], "image": "https://beyoutifulorganics.com/wp-content/uploads/2023/12/WhatsApp-Image-2023-12-28-at-14.25.46_492584bf.jpg" },
+    { "name": "Neem Soap", "priceMin": 250, "priceMax": 250, "categories": ["skincare-products"], "image": "https://beyoutifulorganics.com/wp-content/uploads/2021/08/WhatsApp-Image-2023-12-25-at-22.11.23_a6e5f7f3-430x430.jpg" },
+    { "name": "Orange Oil", "priceMin": 399, "priceMax": 399, "categories": ["haircare-products"], "rating": 4.0, "badge": "Hot", "image": "https://beyoutifulorganics.com/wp-content/uploads/2021/08/WhatsApp-Image-2023-12-25-at-22.11.21_b53eb994-430x321.jpg" },
+    { "name": "Panjeeri", "priceMin": 1700, "priceMax": 1700, "categories": ["others-organics-products"], "image": "https://beyoutifulorganics.com/wp-content/uploads/2023/12/panjeeri-430x256.jpg" },
+    { "name": "Rice Soap", "priceMin": 280, "priceMax": 280, "categories": ["skincare-products"], "image": "https://beyoutifulorganics.com/wp-content/uploads/2021/08/WhatsApp-Image-2023-12-25-at-22.11.18_556912cd-430x368.jpg" },
+    { "name": "Rose Water", "priceMin": 199, "priceMax": 199, "categories": ["skincare-products"], "rating": 5.0, "image": "https://beyoutifulorganics.com/wp-content/uploads/2021/08/WhatsApp-Image-2023-12-25-at-22.11.21_acbb19e3-430x677.jpg" },
+    { "name": "Rosemary Herb", "priceMin": 399, "priceMax": 399, "categories": ["others-organics-products"], "badge": "Hot" },
+    { "name": "Rosemary Oil", "priceMin": 550, "priceMax": 550, "categories": ["haircare-products", "skincare-products"], "image": "https://beyoutifulorganics.com/wp-content/uploads/2023/12/WhatsApp-Image-2023-12-28-at-14.25.50_afec4a30-430x765.jpg" },
+    { "name": "Sandal Ubtan", "priceMin": 199, "priceMax": 199, "categories": ["skincare-products"], "type": "variable", "image": "https://beyoutifulorganics.com/wp-content/uploads/2021/08/WhatsApp-Image-2023-12-25-at-22.11.22_06b79ad3.jpg" },
+    { "name": "Unab Oil / Jojoba Oil", "priceMin": 480, "priceMax": 480, "categories": ["haircare-products", "skincare-products"], "image": "https://beyoutifulorganics.com/wp-content/uploads/2023/12/Main_jojoba_oil-430x248.jpg" }
+  ],
+  "ingredientsHighlighted": [
+    { "name": "Shea Butter", "description": "Shea butter products provide a lavish and wholesome experience for your skin, combining luxury with the healing power of nature." },
+    { "name": "Aloe Vera Gel", "description": "Aloe vera is a versatile and well-known succulent plant with a rich history in skincare and health." },
+    { "name": "Essential Oils", "description": "Essential oils are concentrated extracts derived from plants, capturing their aromatic essence and therapeutic benefits." }
+  ],
+  "blogPosts": [
+    { "title": "Understanding the Importance of Organic Sun Protection", "slug": "understanding-the-importance-of-organic-sun-protection", "date": "2024-01-09" },
+    { "title": "A Complete Guide to Creating Your DIY Organic Skincare Routine", "slug": "a-complete-guide-to-creating-your-diy-organic-skincare-routine", "date": "2024-01-12" },
+    { "title": "Best Oils for Skin Moisturizing", "slug": "best-oils-for-skin-moisturizing", "date": "2024-01-12" },
+    { "title": "Best Organic Skincare Products for Oily Skin", "slug": "best-organic-skincare-products-for-oily-skin", "date": "2024-01-12" },
+    { "title": "DIY Organic Hair Oil: Boost Your Hair's Health", "slug": "diy-organic-hair-oil-boost-your-hairs-health", "date": "2024-03-07" },
+    { "title": "Why Choose All Natural Soap Over Commercial Soap", "slug": "why-choose-all-natural-soap-over-commercial-soap", "date": "2024-03-05" },
+    { "title": "The Benefits of Using Organic Teeth Whitening Paste", "slug": "the-benefits-of-using-organic-teeth-whitening-paste", "date": "2024-03-05" }
+  ],
+  "policies": {
+    "privacy": "Standard privacy policy dated 2024-03-09. Company: Beyoutiful Organics, Karachi, Pakistan. Contact: beyoutiful.organics@gmail.com. Covers personal data collection (email, name, phone, address), cookies, usage data, retention, transfer, deletion rights, children under 13 exclusion."
+  },
+  "notes": "Old site is WordPress/WooCommerce with a furniture demo theme. Product slugs like 'wooden-single-drawer' are theme leftovers; product descriptions are lorem ipsum placeholders. Real data: product names, prices (PKR), categories, ratings, images, brand story, contact info. New site must write original product copy. No shipping/refund/terms pages exist on old site — must be drafted for the business."
+}

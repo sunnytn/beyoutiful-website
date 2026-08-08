@@ -1,0 +1,62 @@
+# Render Blueprint — deploys the BeYoutiful Organics API (free plan compatible).
+# The database lives on Neon (free) and the storefront on Vercel (free).
+# In Render: New + → Blueprint → connect your GitHub repo → it reads this file.
+
+services:
+  - type: web
+    name: beyoutiful-api
+    runtime: node
+    plan: free
+    rootDir: apps/api
+    buildCommand: npm install --no-audit --no-fund && npx prisma generate && npm run build
+    # First deploy: set RUN_SEED=true (fills the shop with all products/content).
+    # After the first successful boot, change RUN_SEED to false so your admin
+    # edits are never overwritten.
+    startCommand: >
+      npx prisma db push --skip-generate &&
+      (if [ "$RUN_SEED" = "true" ]; then node dist/prisma/seed.js; fi) &&
+      node dist/src/main.js
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        sync: false # paste your Neon connection string
+      - key: API_PORT
+        value: 10000
+      - key: WEB_URL
+        sync: false # e.g. https://beyoutifulorganics.com
+      - key: CORS_ORIGINS
+        sync: false # e.g. https://beyoutifulorganics.com,https://www.beyoutifulorganics.com
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: JWT_ACCESS_TTL
+        value: 15m
+      - key: JWT_REFRESH_TTL
+        value: 7d
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: CLOUDINARY_UPLOAD_FOLDER
+        value: beyoutiful
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USER
+        value: beyoutiful.organics@gmail.com
+      - key: SMTP_PASS
+        sync: false # Gmail App Password
+      - key: MAIL_FROM
+        value: BeYoutiful Organics <beyoutiful.organics@gmail.com>
+      - key: BUSINESS_EMAIL
+        value: beyoutiful.organics@gmail.com
+      - key: WHATSAPP_NUMBER
+        value: "923000527443"
+      - key: SEED_ADMIN_PASSWORD
+        sync: false # your admin login password
+      - key: RUN_SEED
+        value: "true"

@@ -1,0 +1,25 @@
+{
+  "name": "beyoutiful-organics",
+  "private": true,
+  "version": "1.0.0",
+  "description": "BeYoutiful Organics — premium organic skincare & haircare e-commerce platform",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n api,web -c green,cyan \"npm run dev -w apps/api\" \"npm run dev -w apps/web\"",
+    "build": "npm run build -w packages/shared && npm run build -w apps/api && npm run build -w apps/web",
+    "db:up": "docker compose up -d db",
+    "db:migrate": "npm run prisma:migrate -w apps/api",
+    "db:seed": "npm run prisma:seed -w apps/api",
+    "typecheck": "npm run typecheck -w apps/api && npm run typecheck -w apps/web",
+    "test": "npm run test -w apps/api"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.17"
+  }
+}

@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cream-100 text-ink antialiased;
+  }
+  ::selection {
+    @apply bg-forest-700 text-cream-100;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  .container-luxe {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12;
+  }
+  .eyebrow {
+    @apply text-xs font-sans font-semibold uppercase tracking-luxe text-clay-600;
+  }
+  .heading-xl {
+    @apply font-display text-4xl leading-[1.08] sm:text-5xl lg:text-6xl text-forest-800;
+  }
+  .heading-lg {
+    @apply font-display text-3xl leading-tight sm:text-4xl text-forest-800;
+  }
+  .heading-md {
+    @apply font-display text-2xl leading-snug sm:text-3xl text-forest-800;
+  }
+  .prose-organic {
+    @apply text-ink-soft leading-relaxed;
+  }
+  .glass-card {
+    @apply bg-white/85 backdrop-blur-md border border-white/70 shadow-soft transition-all duration-300 hover:shadow-lift hover:border-white/90;
+  }
+  .glass-pill {
+    @apply bg-cream-100/80 backdrop-blur-sm border border-cream-300/70 rounded-full px-4 py-1.5 transition-all duration-200;
+  }
+  .skeleton {
+    @apply animate-shimmer rounded-lg bg-gradient-to-r from-cream-200 via-cream-50 to-cream-200 bg-[length:800px_100%];
+  }
+}
+
+/* Markdown content (blog / product long text) */
+.md-content h2 { @apply heading-md mt-10 mb-4; }
+.md-content h3 { @apply font-display text-xl mt-8 mb-3; }
+.md-content p { @apply prose-organic mb-4; }
+.md-content ul, .md-content ol { @apply prose-organic mb-4 ml-5 space-y-1.5; }
+.md-content ul { @apply list-disc; }
+.md-content ol { @apply list-decimal; }
+.md-content strong { @apply text-ink font-semibold; }
+.md-content a { @apply text-forest-700 underline underline-offset-2; }
+.md-content blockquote { @apply border-l-2 border-clay-500 pl-4 italic my-6; }
